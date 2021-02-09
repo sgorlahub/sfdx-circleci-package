@@ -36,14 +36,16 @@ jobs:
             #Authorize Dev Hub
             sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile assets/server.key --username $HUB_USER_NAME --setdefaultdevhubusername -a HubOrg  --instanceurl https://test.salesforce.com
             #Create scratch org
-            sfdx force:org:create -s -f config/project-scratch-def.json --setdefaultusername --setalias circle_build_$CIRCLE_BUILD_NUM --wait 10 --durationdays 1
+            #sfdx force:org:create -s -f config/project-scratch-def.json --setdefaultusername --setalias circle_build_$CIRCLE_BUILD_NUM --wait 10 --durationdays 1
             #Push source to scratch org
-            sfdx force:source:push --targetusername circle_build_$CIRCLE_BUILD_NUM
+            #sfdx force:source:push --targetusername circle_build_$CIRCLE_BUILD_NUM
       - run:
           name: Run Apex Tests
           command: |
             #Run unit tests on scratch org
-            sfdx force:apex:test:run --targetusername circle_build_$CIRCLE_BUILD_NUM --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+            #sfdx force:apex:test:run --targetusername circle_build_$CIRCLE_BUILD_NUM --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+            echo 'Running test classes in hub org'
+            sfdx force:apex:test:run --targetusername $HUB_USER_NAME --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
       - run:
           name: Delete Scratch Org
           command: |
