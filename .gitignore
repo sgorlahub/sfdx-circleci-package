@@ -12,3 +12,7 @@ test/artifacts
 assets/server.key
 assets/env-var-values.txt
 assets/server.key.hex
+assets/server.key
+assets/server.crt
+assets/server.csr
+assets/server.pass.key
